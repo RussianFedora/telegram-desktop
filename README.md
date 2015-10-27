@@ -1,2 +1,8 @@
-# telegram-desktop
-Telegram is a new era of messaging
+telegram-desktop
+================
+
+* Название:                   telegram-desktop
+* Мейнтейнер:                 Аркадий Шейн
+* Репозиторий:                russianfedora-nonfree
+* Почему не в апстриме:       Бинарная сборка
+* Комментарий:                Новая эра в обмене сообщениями
