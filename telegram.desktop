@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Telegram
+GenericName=Telegram Messenger
+Exec=telegram
+Terminal=false
+Icon=telegram
+Type=Application
+Categories=Network;
+X-Desktop-File-Install-Version=0.21
