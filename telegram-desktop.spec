@@ -1,13 +1,13 @@
 Summary:	Telegram is a new era of messaging
 Name:		telegram-desktop
-Version:	0.9.6
+Version:	0.9.10
 Release:	1%{?dist}
 
 Group:		Applications/Internet
 License:	GPLv3
 URL:		https://telegram.org/
-Source0:	https://updates.tdesktop.com/tlinux32/tsetup32.%version.tar.xz
-Source1:	https://updates.tdesktop.com/tlinux/tsetup.%version.tar.xz
+Source0:	https://updates.tdesktop.com/tlinux32/tsetup32.%{version}.tar.xz
+Source1:	https://updates.tdesktop.com/tlinux/tsetup.%{version}.tar.xz
 Source2:	telegram.png
 Source3:	telegram.desktop
 
@@ -69,6 +69,9 @@ desktop-file-install \
 %{_datadir}/pixmaps/telegram.png
 
 %changelog
+* Fri Nov 13 2015 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.10-1.R
+- update to 0.9.10
+
 * Tue Oct 27 2015 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.6-1.R
 - clean up spec
 - update to 0.9.6
