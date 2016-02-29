@@ -1,6 +1,6 @@
 Summary:	Telegram is a new era of messaging
 Name:		telegram-desktop
-Version:	0.9.26
+Version:	0.9.28
 Release:	1%{?dist}
 
 Group:		Applications/Internet
@@ -69,6 +69,9 @@ desktop-file-install \
 %{_datadir}/pixmaps/telegram.png
 
 %changelog
+* Mon Feb 29 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.28-1.R
+- update to 0.9.28
+
 * Tue Feb 23 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.26-1.R
 - update to 0.9.26
 
