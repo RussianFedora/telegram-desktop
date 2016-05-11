@@ -69,6 +69,9 @@ desktop-file-install \
 %{_datadir}/pixmaps/telegram.png
 
 %changelog
+* Wed May 11 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.48-1.R
+- update to 0.9.48
+
 * Thu Apr 14 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.42-1.R
 - update to 0.9.42
 
