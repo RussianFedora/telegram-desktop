@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+ <id>telegram-desktop.desktop</id>
+ <metadata_license>CC0-1.0</metadata_license>
+ <project_license>GPL-3.0+ and OpenSSL</project_license>
+ <name>Telegram Desktop</name>
+ <summary>Official desktop version of Telegram messaging app</summary>
+ <summary xml:lang="es">Versión oficial de la aplicación de mensajería Telegram para el Escritorio</summary>
+ <summary xml:lang="pt_BR">Versão oficial do aplicativo de mensagens Telegram o Desktop</summary>
+ <summary xml:lang="de">Offizielle Version der Messaging-Anwendung Telegram</summary>
+ <description>
+  <p>
+   Telegram is a messaging app with a focus on speed and security, it’s super fast, simple and free. You can use Telegram on all your devices at the same time — your messages sync seamlessly across any number of your phones, tablets or computers.</p>
+  <p>With Telegram, you can send messages, photos, videos and files of any type (doc, zip, mp3, etc), as well as create groups for up to 200 people or channels for broadcasting to unlimited audiences. You can write to your phone contacts and find people by their usernames. As a result, Telegram is like SMS and email combined — and can take care of all your personal or business messaging needs.</p>
+  <p>Reasons to choose Telegram:</p>
+  <ul>
+   <li>Private: Telegram messages are heavily encrypted</li>
+   <li>Cloud-Based: Telegram lets you access your messages from multiple devices</li>
+   <li>Fast: Telegram delivers messages faster than any other application</li>
+   <li>Distributed: Telegram servers are spread worldwide for security and speed</li>
+   <li>Open: Telegram has an open API and protocol free for everyone</li>
+   <li>Free: Telegram is free forever. No ads. No subscription fees</li>
+   <li>Secure: Telegram keeps your messages safe from hacker attacks</li>
+   <li>Powerful: Telegram has no limits on the size of your media and chats</li>
+   <li>We Can do it!: Help make messaging safe again – spread the word about Telegram</li>
+  </ul>
+  <p>Telegram is for everyone who wants fast and reliable messaging. Business users and small teams may like the large groups, desktop apps and powerful file sharing options. Since Telegram groups can have up to 200 members, we support replies, mentions and hashtags that help maintain order and keep communication in large communities efficient.</p>
+ </description>
+ <description>
+  <p xml:lang="es">
+   Telegram es una aplicación de mensajería enfocada en la velocidad y seguridad, es súper rápida, simple y gratis. Puedes usar Telegram en todos tus dispositivos al mismo tiempo – tus mensajes se sincronizan a la perfección a través de cualquiera de tus teléfonos, tablets o computadores.</p>
+  <p xml:lang="es">Con Telegram, puedes enviar mensajes, fotos, vídeos y archivos de cualquier tipo (doc, zip, mp3, etc.), como también crear grupos de hasta 200 personas o canales para la difusión a un público ilimitado. Puedes escribir a tus contactos del teléfono y encontrar personas a través de sus alias. Como resultado, Telegram es como SMS y correo electrónico combinados – y puede hacerse cargo de todas las necesidades que tengas con tu mensajería personal o de negocios.</p>
+  <p xml:lang="es">Razones para elegir Telegram:</p>
+  <ul xml:lang="es">
+   <li>Privado: Los mensajes de Telegram están fuertemente cifrados</li>
+   <li>Basado en la nube: Telegram le permite acceder a sus mensajes desde múltiples dispositivos</li>
+   <li>Rápido: Telegram entrega sus mensajes más rápido que cualquier otra aplicación</li>
+   <li>Distribuido: Los servidores de Telegram se distribuyen en todo el mundo por seguridad y mayor velocidad</li>
+   <li>Abierto: Telegram tiene una API abierta y un protocolo libre para todos</li>
+   <li>Libre: Telegram es libre para siempre. Sin anuncios, no hay cuota de suscripción</li>
+   <li>Seguro: Telegram mantiene sus mensajes a salvo de los ataques de hackers</li>
+   <li>Potente: Telegram no tiene límites en el tamaño de las conversaciones y multimedia</li>
+   <li>¡Podemos hacerlo!: Ayuda a hacer segura la mensajería de nuevo – a correr la voz acerca de Telegram</li>
+  </ul>
+  <p xml:lang="es">Telegram es para cualquiera que quiera mensajería rápida y confiable. A los usuarios del mundo de los negocios y a los pequeños equipos les pueden gustar los grandes grupos, aplicaciones para computadores y las opciones para compartir archivos. Como Telegram permite tener hasta 200 miembros por grupo, tenemos respuestas, menciones y hashtags, que ayudan a mantener el orden y la eficiencia en la comunicación para las comunidades grandes.</p>
+ </description>
+ <description>
+  <p xml:lang="pt_BR">
+   O Telegram é um aplicativo de mensagens com foco em velocidade e segurança, é super rápido, simples e grátis. Você pode usar o Telegram em todos os seus dispositivos ao mesmo tempo — suas mensagens serão sincronizadas em todos os seus celulares, tablets e computadores.</p>
+  <p xml:lang="pt_BR">Com Telegram, você pode enviar mensagens, fotos, vídeos e arquivos de qualquer tipo (doc, zip, mp3, etc), assim como criar grupos de até 200 pessoas ou canais para transmitir para audiências ilimitadas. Você pode conversar com seus contatos telefônicos ou procurando-os pelo nome de usuário. Como resultado, Telegram é como SMS e email combinados — e pode tomar conta de todas suas necessidades de mensagens pessoais ou de negócios.</p>
+  <p xml:lang="pt_BR">Por que escolher Telegram:</p>
+  <ul xml:lang="pt_BR">
+   <li>Privado: Telegrama mensagens são fortemente criptografados</li>
+   <li>Com base da nuvem: Telegrama permite acessar suas mensagens a partir de vários dispositivos</li>
+   <li>Rápido: Telegrama oferece suas mensagens mais rapidamente do que qualquer outra aplicação</li>
+   <li>Distribuído: Telegrama servidores são distribuídos em todo o mundo para a segurança e mais rápido</li>
+   <li>Aberto: Telegram tem uma API aberta e um protocolo livre para todos</li>
+   <li>Livre: Telegrama está livre para sempre. Sem anúncios, sem taxa de inscrição</li>
+   <li>Seguro: Telegrama mantém suas mensagens seguras contra ataques de hackers</li>
+   <li>Poderoso: Telegrama não tem limites no tamanho das conversas e multimídia</li>
+   <li>Podemos fazê-lo: Ajude a fazer seguro de mensagens novamente — espalhar a palavra sobre Telegram</li>
+  </ul>
+  <p xml:lang="pt_BR">O Telegram é para todos que querem um mensageiro rápido e confiável. Usuários corporativos e pequenas equipes podem gostar dos grandes grupos, dos aplicativos para computadores e das opções de compartilhamento de arquivos. Os grupos do Telegram suportam até 200 membros, além de respostas, menções e hashtags que ajudam a manter a ordem e permitem uma comunicação em grandes comunidades de maneira mais eficiente.</p>
+ </description>
+ <description>
+  <p xml:lang="de">
+   Du kannst auf alle Chatnachrichten von verschiedenen Geräten (einschließlich PCs, Tablets, Smartphones und Webbrowsern) zugreifen und eine unbegrenzte Anzahl von Fotos, Videos und sonstige Dateien verschicken und empfangen.</p>
+  <p xml:lang="de">Außerdem kannst du über Telegram Textnachrichten, Fotos, Videos und Dateien jeglicher Art an Freunde und Bekannte senden, welche ebenfalls Telegram benutzen. Bei Telegram kann man auch Gruppen mit bis zu 200 Mitgliedern erstellen und so sicher Nachrichten austauschen. Du kannst Telefonkontakte anschreiben oder Nutzer über den öffentlichen Benutzernamen finden.</p>
+  <p xml:lang="de">Also ist Telegram wie SMS und E-Mail schreiben zusammen – und du kannst dich mit all deinen Kontakte in nur einer App austauschen.</p>
+  <p xml:lang="de">Warum wählen Sie Telegram:</p>
+  <ul xml:lang="de">
+   <li>Privat: Telegram-Nachrichten werden stark verschlüsselt</li>
+   <li>Cloud-basierte: Telegram können Sie Ihre Nachrichten zugreifen von mehreren Geräten</li>
+   <li>Schnell: Telegram liefert Nachrichten schneller als jede andere Anwendung</li>
+   <li>Verteilte: Telegram-Server sind weltweit für Sicherheit und Geschwindigkeit ausbreiten</li>
+   <li>Öffnen: Telegram hat eine offene API und Protokoll für jeden frei</li>
+   <li>Frei: Telegram wird für immer frei. Keine Werbung. Keine Abo-Gebühren</li>
+   <li>Sichern: Telegram hält Ihre Nachrichten zum Schutz vor Hacker-Angriffen</li>
+   <li>Leistungsstark:Telegram hat keine Grenzen für die Größe der Medien und Chats</li>
+   <li>Wir können es schaffen!: Helfen Sie Messaging wieder sicher - das Wort über Telegramm</li>
+  </ul>
+  <p xml:lang="de">Telegram ist für jeden, der schnelles, zuverlässiges und vor allem sicheres Messaging nutzen möchte. Für Business-Anwender und kleine Teams sind die großzügige Gruppengröße, die Desktop-Apps und die Möglichkeit, jeden Dateityp per Chat zu verschicken, besonders praktisch. Da Telegram Gruppen bis zu 200 Mitglieder haben können, unterstützen wir direktes Antworten, ein Erwähnen von Personen und Hashtags damit man den Überblick in so umfangreichen Gesprächsrunden nicht verliert. Alle, die auf der Suche nach mehr Privatsphäre sind, finden sicher unsere erweiterten Einstellungen und unsere Datenschutzbestimmungen interessant.</p>
+ </description>
+ <screenshots>
+  <screenshot type="default">
+   <image>https://desktop.telegram.org/img/td_screen.png</image>
+  </screenshot>
+  </screenshots>
+ <url type="homepage">https://desktop.telegram.org</url>
+ <updatecontact>support@telegram.org</updatecontact>
+</component>

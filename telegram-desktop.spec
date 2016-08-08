@@ -1,7 +1,7 @@
 Summary:	Telegram is a new era of messaging
 Name:		telegram-desktop
 Version:	0.10.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 
 Group:		Applications/Internet
 License:	GPLv3
@@ -10,8 +10,10 @@ Source0:	https://updates.tdesktop.com/tlinux32/tsetup32.%{version}.tar.xz
 Source1:	https://updates.tdesktop.com/tlinux/tsetup.%{version}.tar.xz
 Source2:	telegram.png
 Source3:	telegram.desktop
+Source4:	%{name}.appdata.xml
 
 BuildRequires:	desktop-file-utils
+BuildRequires:	libappstream-glib
 
 
 %description
@@ -59,6 +61,9 @@ desktop-file-install \
 	--dir=%{buildroot}%{_datadir}/applications \
 	%{buildroot}%{_datadir}/%{name}.desktop
 
+install -D -m0644 %{SOURCE4} %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
+appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
+
 
 %files
 %{_bindir}/telegram
@@ -67,8 +72,12 @@ desktop-file-install \
 %{_datadir}/%{name}/updater
 %{_datadir}/applications/telegram-desktop.desktop
 %{_datadir}/pixmaps/telegram.png
+%{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Mon Aug  8 2016 rkady L. Shane <ashejn@russianfedora.pro> 0.10.1-2
+- added appdata file
+
 * Mon Aug  8 2016 rkady L. Shane <ashejn@russianfedora.pro> 0.10.1-1
 - update to 0.10.1
 
