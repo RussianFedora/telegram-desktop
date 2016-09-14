@@ -1,7 +1,7 @@
 Summary:	Telegram is a new era of messaging
 Name:		telegram-desktop
-Version:	0.10.1
-Release:	2%{?dist}
+Version:	0.10.6
+Release:	1%{?dist}
 
 Group:		Applications/Internet
 License:	GPLv3
@@ -75,6 +75,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/%{name}.ap
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Wed Sep 14 2016 rkady L. Shane <ashejn@russianfedora.pro> 0.10.6-1
+- update to 0.10.6
+
 * Mon Aug  8 2016 rkady L. Shane <ashejn@russianfedora.pro> 0.10.1-2
 - added appdata file
 
