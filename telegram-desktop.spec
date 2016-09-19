@@ -1,20 +1,73 @@
-Summary:	Telegram is a new era of messaging
-Name:		telegram-desktop
-Version:	0.10.6
-Release:	1%{?dist}
+%global _QTVERSION 5.6.0
+%global _APPNAME tdesktop
 
-Group:		Applications/Internet
-License:	GPLv3
-URL:		https://telegram.org/
-Source0:	https://updates.tdesktop.com/tlinux32/tsetup32.%{version}.tar.xz
-Source1:	https://updates.tdesktop.com/tlinux/tsetup.%{version}.tar.xz
-Source2:	telegram.png
-Source3:	telegram.desktop
-Source4:	%{name}.appdata.xml
+Summary: Telegram is a new era of messaging
+Name: telegram-desktop
+Version: 0.10.6
+Release: 2%{?dist}
 
-BuildRequires:	desktop-file-utils
-BuildRequires:	libappstream-glib
+Group: Applications/Internet
+License: GPLv3
+URL: https://github.com/telegramdesktop
+Source0: %{url}/%{_APPNAME}/archive/v%{version}.tar.gz
+Source1: https://download.qt.io/official_releases/qt/5.6/5.6.0/submodules/qtbase-opensource-src-5.6.0.tar.xz
+Source2: https://download.qt.io/official_releases/qt/5.6/5.6.0/submodules/qtimageformats-opensource-src-5.6.0.tar.xz
+Source3: https://chromium.googlesource.com/external/gyp/+archive/master.tar.gz#/gyp.tar.gz
+Source4: https://chromium.googlesource.com/breakpad/breakpad/+archive/master.tar.gz#/breakpad.tar.gz
+Source5: https://chromium.googlesource.com/linux-syscall-support/+archive/master.tar.gz#/breakpad-lss.tar.gz
+Source6: https://cmake.org/files/v3.6/cmake-3.6.2.tar.gz
 
+Source101: telegram.desktop
+Source102: telegram-desktop.appdata.xml
+Source103: tg.protocol
+
+Patch0: fix_build_under_fedora.patch
+
+Requires: hicolor-icon-theme
+BuildRequires: desktop-file-utils
+BuildRequires: libappstream-glib
+BuildRequires: ffmpeg-devel >= 3.1
+BuildRequires: gcc
+BuildRequires: gcc-c++
+BuildRequires: chrpath
+BuildRequires: libwayland-client-devel
+BuildRequires: libwayland-server-devel
+BuildRequires: libwayland-cursor-devel
+BuildRequires: libproxy-devel
+BuildRequires: libxcb-devel
+BuildRequires: libogg-devel
+BuildRequires: xz-devel
+BuildRequires: libappindicator-devel
+BuildRequires: libunity-devel
+BuildRequires: libstdc++-devel
+BuildRequires: libstdc++-static
+BuildRequires: libwebp-devel
+BuildRequires: libpng-devel
+BuildRequires: xorg-x11-util-macros
+BuildRequires: gettext-devel
+BuildRequires: libICE-devel
+BuildRequires: libSM-devel
+BuildRequires: libXi-devel
+BuildRequires: openjpeg-devel
+BuildRequires: libjpeg-turbo-devel
+BuildRequires: openssl-devel
+BuildRequires: zlib-devel
+BuildRequires: libexif-devel
+BuildRequires: opus-devel
+BuildRequires: portaudio-devel
+BuildRequires: openal-soft-devel
+BuildRequires: xcb-util-devel
+BuildRequires: xcb-util-wm-devel
+BuildRequires: xcb-util-xrm-devel
+BuildRequires: xcb-util-image-devel
+BuildRequires: xcb-util-cursor-devel
+BuildRequires: xcb-util-keysyms-devel
+BuildRequires: xcb-util-renderutil-devel
+BuildRequires: libva-devel
+BuildRequires: libxkbcommon-devel
+BuildRequires: libxkbcommon-x11-devel
+BuildRequires: harfbuzz-devel
+BuildRequires: pcre-devel
 
 %description
 Telegram is a messaging app with a focus on speed and security, it’s super
@@ -28,53 +81,165 @@ write to your phone contacts and find people by their usernames. As a result,
 Telegram is like SMS and email combined — and can take care of all your
 personal or business messaging needs.
 
-
 %prep
-%ifarch %ix86
-%setup -b0 -q -n Telegram
-%endif
+# Setting some constants...
+qtv=%{_QTVERSION}
+qtdir="%_builddir/Libraries/qt${qtv//./_}"
+qtpatch="%_builddir/%{_APPNAME}-%{version}/Telegram/Patches/qtbase_${qtv//./_}.diff"
 
-%ifarch x86_64 amd64
-%setup -b1 -q -n Telegram
-%endif
+# Creating directory for libraries...
+mkdir -p "$qtdir"
+
+# Unpacking Telegram Desktop source archive...
+tar -xf %{SOURCE0}
+
+# Patching Telegram Desktop...
+cd "%_builddir/%{_APPNAME}-%{version}"
+patch -p1 -i %{PATCH0}
+
+# Unpacking Qt...
+cd "$qtdir"
+tar -xf %{SOURCE1}
+mv -f "qtbase-opensource-src-%{_QTVERSION}" "qtbase"
+tar -xf %{SOURCE2}
+mv -f "qtimageformats-opensource-src-%{_QTVERSION}" "qtimageformats"
+
+# Applying Qt patch...
+cd "$qtdir/qtbase"
+patch -p1 -i "$qtpatch"
+
+# Unpacking GYP...
+mkdir -p "%_builddir/Libraries/gyp"
+cd "%_builddir/Libraries/gyp"
+tar -xf %{SOURCE3}
+
+# Applying GYP patch...
+patch -p1 -i "%_builddir/%{_APPNAME}-%{version}/Telegram/Patches/gyp.diff"
+
+# Unpacking breakpad with lss support...
+mkdir -p "%_builddir/Libraries/breakpad"
+cd "%_builddir/Libraries/breakpad"
+tar -xf %{SOURCE4}
+mkdir -p "%_builddir/Libraries/breakpad/src/third_party/lss"
+cd "%_builddir/Libraries/breakpad/src/third_party/lss"
+tar -xf %{SOURCE5}
+
+# Unpacking CMake...
+cd "%_builddir/Libraries"
+tar -xf %{SOURCE6}
 
 %build
-# nothing to build
+# Setting some constants...
+qtv=%{_QTVERSION}
+qtdir="%_builddir/Libraries/qt${qtv//./_}"
+
+# Building patched Qt...
+cd "$qtdir/qtbase"
+./configure \
+    -prefix "%_builddir/qt" \
+    -release \
+    -opensource \
+    -confirm-license \
+    -system-zlib \
+    -system-libpng \
+    -system-libjpeg \
+    -system-freetype \
+    -system-harfbuzz \
+    -system-pcre \
+    -system-xcb \
+    -system-xkbcommon-x11 \
+    -no-opengl \
+    -no-gtkstyle \
+    -static \
+    -nomake examples \
+    -nomake tests
+%make_build
+make install
+
+# Exporting new PATH...
+export PATH="%_builddir/qt/bin:$PATH"
+
+# Building Qt image plugins...
+cd "$qtdir/qtimageformats"
+qmake .
+%make_build
+make install
+
+# Building breakpad...
+cd "%_builddir/Libraries/breakpad"
+./configure
+%make_build
+
+# Building custom cmake...
+cd "%_builddir/Libraries/cmake-3.6.2"
+./configure
+%make_build
+
+# Building Telegram Desktop...
+cd "%_builddir/%{_APPNAME}-%{version}/Telegram"
+gyp/refresh.sh
+cd "%_builddir/%{_APPNAME}-%{version}/out/Release"
+%make_build
 
 %install
-mkdir -p %{buildroot}%{_datadir}/%{name}
-mkdir -p %{buildroot}%{_datadir}/pixmaps
-mkdir -p %{buildroot}%{_datadir}/applications
-mkdir -p %{buildroot}%{_bindir}
+# Installing executables...
+cd "%_builddir/%{_APPNAME}-%{version}/out/Release"
+mkdir -p "%{buildroot}%{_bindir}"
+chrpath -d Telegram
+install -m 755 Telegram "%{buildroot}%{_bindir}/%{name}"
 
-cp -arf ./Telegram %{buildroot}%{_datadir}/%{name}/telegram
-cp -arf ./Updater %{buildroot}%{_datadir}/%{name}/updater
-cp %{SOURCE2} %{buildroot}%{_datadir}/pixmaps/
+# Installing desktop shortcut...
+desktop-file-install --dir="%{buildroot}%{_datadir}/applications" "%{SOURCE101}"
 
-ln -s %{_datadir}/%{name}/telegram %{buildroot}%{_bindir}/telegram
+# Installing icons...
+for size in 16 32 48 64 128 256 512; do
+	dir="%{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps"
+	install -d "$dir"
+	install -m 644 "%_builddir/%{_APPNAME}-%{version}/Telegram/Resources/art/icon${size}.png" "$dir/%{name}.png"
+done
 
-cp %{SOURCE3} %{buildroot}%{_datadir}/%{name}.desktop
+# Installing tg protocol handler...
+install -d "%{buildroot}%{_datadir}/kde4/services"
+install -m 644 "%{SOURCE103}" "%{buildroot}%{_datadir}/kde4/services/tg.protocol"
 
-desktop-file-install \
-	--add-category="Network" \
-	--delete-original \
-	--dir=%{buildroot}%{_datadir}/applications \
-	%{buildroot}%{_datadir}/%{name}.desktop
+# Installing appdata for Gnome Software...
+install -d "%{buildroot}%{_datadir}/appdata"
+install -m 644 "%{SOURCE102}" "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"
 
-install -D -m0644 %{SOURCE4} %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
-appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
+%check
+appstream-util validate-relax --nonet "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"
 
+%post
+/bin/touch --no-create %{_datadir}/mime/packages &>/dev/null || :
+/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+/usr/bin/update-desktop-database &> /dev/null || :
+
+%postun
+if [ $1 -eq 0 ] ; then
+    /usr/bin/update-mime-database %{_datadir}/mime &> /dev/null || :
+    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
+    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+fi
+/usr/bin/update-desktop-database &> /dev/null || :
+
+%posttrans
+/usr/bin/update-mime-database %{?fedora:-n} %{_datadir}/mime &> /dev/null || :
+/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files
-%{_bindir}/telegram
-%dir %{_datadir}/%{name}
-%{_datadir}/%{name}/telegram
-%{_datadir}/%{name}/updater
-%{_datadir}/applications/telegram-desktop.desktop
-%{_datadir}/pixmaps/telegram.png
+%doc %{_APPNAME}-%{version}/README.md
+%license %{_APPNAME}-%{version}/LICENSE
+%{_bindir}/%{name}
+%{_datadir}/applications/telegram.desktop
+%{_datadir}/kde4/services/tg.protocol
+%{_datadir}/icons/hicolor/*/apps/%{name}.png
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Sat Sep 17 2016 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.6-2
+- Created new SPEC.
+- Added installation of tg protocol and mime-handler.
+
 * Wed Sep 14 2016 rkady L. Shane <ashejn@russianfedora.pro> 0.10.6-1
 - update to 0.10.6
 

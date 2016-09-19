@@ -1,9 +1,10 @@
 [Desktop Entry]
 Name=Telegram
 GenericName=Telegram Messenger
-Exec=telegram
+Exec=/usr/bin/telegram-desktop -- %u
 Terminal=false
-Icon=telegram
+StartupWMClass=telegram-desktop
+Icon=telegram-desktop
 Type=Application
 Categories=Network;
-X-Desktop-File-Install-Version=0.21
+MimeType=x-scheme-handler/tg;
