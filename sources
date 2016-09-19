@@ -1,2 +1,7 @@
-4379d406a79f9579f55a14f61fe999229618d481131fa18e43b6e273adfeca70  tsetup.0.10.6.tar.xz
-33d5c8556ebbc6582352f3566bcbdeb18d6223a14a075659a9c5d38704aaff84  tsetup32.0.10.6.tar.xz
+cdb8de543897237e81e69f0ae9b7d1fe  breakpad-lss.tar.gz
+2b20be09edf51beff0d65fdc7f257681  breakpad.tar.gz
+139d7affdd4e8ab1edfc9f4322d69e43  cmake-3.6.2.tar.gz
+2ac09d8fd17c41d6af866209c7c657b2  gyp.tar.gz
+d6b6cfd333c22829c6c85fc52ceed019  qtbase-opensource-src-5.6.0.tar.xz
+bb57c1db37e89a47f3513859ef04ae97  qtimageformats-opensource-src-5.6.0.tar.xz
+fd7e4ce8daf134e7f32541dd20742a9a  v0.10.6.tar.gz
