@@ -4,24 +4,24 @@
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
 Version: 0.10.6
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 Group: Applications/Internet
 License: GPLv3
 URL: https://github.com/telegramdesktop
 Source0: %{url}/%{_APPNAME}/archive/v%{version}.tar.gz
-Source1: https://download.qt.io/official_releases/qt/5.6/5.6.0/submodules/qtbase-opensource-src-5.6.0.tar.xz
-Source2: https://download.qt.io/official_releases/qt/5.6/5.6.0/submodules/qtimageformats-opensource-src-5.6.0.tar.xz
+Source1: https://download.qt.io/official_releases/qt/5.6/%{_QTVERSION}/submodules/qtbase-opensource-src-%{_QTVERSION}.tar.xz
+Source2: https://download.qt.io/official_releases/qt/5.6/%{_QTVERSION}/submodules/qtimageformats-opensource-src-%{_QTVERSION}.tar.xz
 Source3: https://chromium.googlesource.com/external/gyp/+archive/master.tar.gz#/gyp.tar.gz
 Source4: https://chromium.googlesource.com/breakpad/breakpad/+archive/master.tar.gz#/breakpad.tar.gz
 Source5: https://chromium.googlesource.com/linux-syscall-support/+archive/master.tar.gz#/breakpad-lss.tar.gz
-Source6: https://cmake.org/files/v3.6/cmake-3.6.2.tar.gz
 
 Source101: telegram.desktop
 Source102: telegram-desktop.appdata.xml
 Source103: tg.protocol
 
 Patch0: fix_build_under_fedora.patch
+Patch1: fix_cmake.patch
 
 Requires: hicolor-icon-theme
 BuildRequires: desktop-file-utils
@@ -30,6 +30,7 @@ BuildRequires: ffmpeg-devel >= 3.1
 BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: chrpath
+BuildRequires: cmake
 BuildRequires: libwayland-client-devel
 BuildRequires: libwayland-server-devel
 BuildRequires: libwayland-cursor-devel
@@ -96,6 +97,7 @@ tar -xf %{SOURCE0}
 # Patching Telegram Desktop...
 cd "%_builddir/%{_APPNAME}-%{version}"
 patch -p1 -i %{PATCH0}
+patch -p1 -i %{PATCH1}
 
 # Unpacking Qt...
 cd "$qtdir"
@@ -123,10 +125,6 @@ tar -xf %{SOURCE4}
 mkdir -p "%_builddir/Libraries/breakpad/src/third_party/lss"
 cd "%_builddir/Libraries/breakpad/src/third_party/lss"
 tar -xf %{SOURCE5}
-
-# Unpacking CMake...
-cd "%_builddir/Libraries"
-tar -xf %{SOURCE6}
 
 %build
 # Setting some constants...
@@ -167,11 +165,6 @@ make install
 
 # Building breakpad...
 cd "%_builddir/Libraries/breakpad"
-./configure
-%make_build
-
-# Building custom cmake...
-cd "%_builddir/Libraries/cmake-3.6.2"
 ./configure
 %make_build
 
@@ -236,6 +229,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Tue Sep 20 2016 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.6-3
+- Added new patch to build project using systemwide cmake.
+
 * Sat Sep 17 2016 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.6-2
 - Created new SPEC.
 - Added installation of tg protocol and mime-handler.
