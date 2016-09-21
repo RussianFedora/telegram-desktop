@@ -41,7 +41,6 @@ BuildRequires: xz-devel
 BuildRequires: libappindicator-devel
 BuildRequires: libunity-devel
 BuildRequires: libstdc++-devel
-BuildRequires: libstdc++-static
 BuildRequires: libwebp-devel
 BuildRequires: libpng-devel
 BuildRequires: xorg-x11-util-macros

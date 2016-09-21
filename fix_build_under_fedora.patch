@@ -1,14 +1,14 @@
-From 3fb7d1d76ff4de8372a3e7c1ce546458bf305c2a Mon Sep 17 00:00:00 2001
+From cdbc427630ce8454b4d5f3ab798f52268ef7dd69 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
-Date: Wed, 21 Sep 2016 13:14:41 +0200
+Date: Wed, 21 Sep 2016 14:38:02 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock. Thanks to AUR packagers for this.
 
 ---
  Telegram/gyp/Telegram.gyp        | 10 ++++-----
- Telegram/gyp/qt.gypi             | 41 ++++++++++++++++++++---------------
+ Telegram/gyp/qt.gypi             | 42 +++++++++++++++++++----------------
  Telegram/gyp/telegram_linux.gypi | 47 ++++++++++++++++++++++++++--------------
  Telegram/gyp/utils.gyp           | 12 +++++-----
- 4 files changed, 65 insertions(+), 45 deletions(-)
+ 4 files changed, 65 insertions(+), 46 deletions(-)
 
 diff --git a/Telegram/gyp/Telegram.gyp b/Telegram/gyp/Telegram.gyp
 index 0e8db70..3469337 100644
@@ -38,7 +38,7 @@ index 0e8db70..3469337 100644
      ],
      'sources': [
 diff --git a/Telegram/gyp/qt.gypi b/Telegram/gyp/qt.gypi
-index 2a8f010..36b99f2 100644
+index 2a8f010..66bbc98 100644
 --- a/Telegram/gyp/qt.gypi
 +++ b/Telegram/gyp/qt.gypi
 @@ -29,7 +29,6 @@
@@ -86,7 +86,7 @@ index 2a8f010..36b99f2 100644
              ],
            }],
          ],
-@@ -202,18 +189,36 @@
+@@ -202,24 +189,41 @@
          '<(qt_loc)/plugins/platforminputcontexts',
        ],
        'libraries': [
@@ -126,6 +126,12 @@ index 2a8f010..36b99f2 100644
        ],
        'include_dirs': [
          '<(qt_loc)/mkspecs/linux-g++',
+       ],
+       'ldflags': [
+-        '-static-libstdc++',
+         '-pthread',
+         '-g',
+         '-rdynamic',
 diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
 index 15bfbb6..ff1ae35 100644
 --- a/Telegram/gyp/telegram_linux.gypi

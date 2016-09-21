@@ -1,6 +1,6 @@
-From 2717375cb52e8d9d83067d1d696b1b04e418073d Mon Sep 17 00:00:00 2001
+From 5ff242f5fb3ab6bb226a63e4975eac77b1cf08cc Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
-Date: Wed, 21 Sep 2016 13:37:28 +0200
+Date: Wed, 21 Sep 2016 14:38:41 +0200
 Subject: [PATCH] Build using systemwide cmake.
 
 ---
