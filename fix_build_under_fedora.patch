@@ -1,6 +1,6 @@
-From d4cc9df4160ae52b37bf0ecfe97b949e2fa6e33c Mon Sep 17 00:00:00 2001
+From 3fb7d1d76ff4de8372a3e7c1ce546458bf305c2a Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
-Date: Fri, 16 Sep 2016 19:21:40 +0200
+Date: Wed, 21 Sep 2016 13:14:41 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock. Thanks to AUR packagers for this.
 
 ---
@@ -38,7 +38,7 @@ index 0e8db70..3469337 100644
      ],
      'sources': [
 diff --git a/Telegram/gyp/qt.gypi b/Telegram/gyp/qt.gypi
-index b82f833..576eadb 100644
+index 2a8f010..36b99f2 100644
 --- a/Telegram/gyp/qt.gypi
 +++ b/Telegram/gyp/qt.gypi
 @@ -29,7 +29,6 @@
@@ -67,13 +67,11 @@ index b82f833..576eadb 100644
              'qt_lib_prefix': 'lib',
              'qt_lib_debug_postfix': '.a',
              'qt_lib_release_postfix': '.a',
-@@ -91,20 +90,6 @@
+@@ -91,18 +90,6 @@
                '<@(qt_libs)',
                'Qt5DBus',
                'Qt5Core',
 -              'qtpcre',
--              'ssl',
--              'crypto',
 -              'Xi',
 -              'Xext',
 -              'SM',
@@ -88,12 +86,14 @@ index b82f833..576eadb 100644
              ],
            }],
          ],
-@@ -202,16 +187,36 @@
-   'conditions': [
-     [ 'build_linux', {
+@@ -202,18 +189,36 @@
+         '<(qt_loc)/plugins/platforminputcontexts',
+       ],
        'libraries': [
 -        '/usr/local/lib/libxkbcommon.a',
          '<@(qt_libs_release)',
+-        '/usr/local/ssl/lib/libssl.a',
+-        '/usr/local/ssl/lib/libcrypto.a',
 +        'z',
 +        'pcre16',
 +        'harfbuzz',
@@ -194,10 +194,10 @@ index 15bfbb6..ff1ae35 100644
      ],
      'cflags_cc': [
 diff --git a/Telegram/gyp/utils.gyp b/Telegram/gyp/utils.gyp
-index 117c87a..342d30e 100644
+index 209c737..06c5905 100644
 --- a/Telegram/gyp/utils.gyp
 +++ b/Telegram/gyp/utils.gyp
-@@ -122,11 +122,11 @@
+@@ -130,11 +130,11 @@
              ],
            }, {
              'include_dirs': [
@@ -212,7 +212,7 @@ index 117c87a..342d30e 100644
              ],
            }]
          ],
-@@ -144,11 +144,11 @@
+@@ -152,11 +152,11 @@
              ],
            }, {
              'include_dirs': [
