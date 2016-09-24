@@ -1,5 +1,5 @@
-%global _QTVERSION 5.6.0
-%global _APPNAME tdesktop
+%global qtversion 5.6.0
+%global appname tdesktop
 
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
@@ -8,10 +8,11 @@ Release: 1%{?dist}
 
 Group: Applications/Internet
 License: GPLv3
-URL: https://github.com/telegramdesktop
-Source0: %{url}/%{_APPNAME}/archive/v%{version}.tar.gz
-Source1: https://download.qt.io/official_releases/qt/5.6/%{_QTVERSION}/submodules/qtbase-opensource-src-%{_QTVERSION}.tar.xz
-Source2: https://download.qt.io/official_releases/qt/5.6/%{_QTVERSION}/submodules/qtimageformats-opensource-src-%{_QTVERSION}.tar.xz
+URL: https://github.com/telegramdesktop/%{appname}
+
+Source0: %{url}/archive/v%{version}.tar.gz#/%{appname}-%{version}.tar.gz
+Source1: https://download.qt.io/official_releases/qt/5.6/%{qtversion}/submodules/qtbase-opensource-src-%{qtversion}.tar.xz
+Source2: https://download.qt.io/official_releases/qt/5.6/%{qtversion}/submodules/qtimageformats-opensource-src-%{qtversion}.tar.xz
 Source3: https://chromium.googlesource.com/external/gyp/+archive/master.tar.gz#/gyp.tar.gz
 Source4: https://chromium.googlesource.com/breakpad/breakpad/+archive/master.tar.gz#/breakpad.tar.gz
 Source5: https://chromium.googlesource.com/linux-syscall-support/+archive/master.tar.gz#/breakpad-lss.tar.gz
@@ -83,9 +84,9 @@ personal or business messaging needs.
 
 %prep
 # Setting some constants...
-qtv=%{_QTVERSION}
+qtv=%{qtversion}
 qtdir="%_builddir/Libraries/qt${qtv//./_}"
-qtpatch="%_builddir/%{_APPNAME}-%{version}/Telegram/Patches/qtbase_${qtv//./_}.diff"
+qtpatch="%_builddir/%{appname}-%{version}/Telegram/Patches/qtbase_${qtv//./_}.diff"
 
 # Creating directory for libraries...
 mkdir -p "$qtdir"
@@ -94,16 +95,16 @@ mkdir -p "$qtdir"
 tar -xf %{SOURCE0}
 
 # Patching Telegram Desktop...
-cd "%_builddir/%{_APPNAME}-%{version}"
+cd "%_builddir/%{appname}-%{version}"
 patch -p1 -i %{PATCH0}
 patch -p1 -i %{PATCH1}
 
 # Unpacking Qt...
 cd "$qtdir"
 tar -xf %{SOURCE1}
-mv -f "qtbase-opensource-src-%{_QTVERSION}" "qtbase"
+mv -f "qtbase-opensource-src-%{qtversion}" "qtbase"
 tar -xf %{SOURCE2}
-mv -f "qtimageformats-opensource-src-%{_QTVERSION}" "qtimageformats"
+mv -f "qtimageformats-opensource-src-%{qtversion}" "qtimageformats"
 
 # Applying Qt patch...
 cd "$qtdir/qtbase"
@@ -115,7 +116,7 @@ cd "%_builddir/Libraries/gyp"
 tar -xf %{SOURCE3}
 
 # Applying GYP patch...
-patch -p1 -i "%_builddir/%{_APPNAME}-%{version}/Telegram/Patches/gyp.diff"
+patch -p1 -i "%_builddir/%{appname}-%{version}/Telegram/Patches/gyp.diff"
 
 # Unpacking breakpad with lss support...
 mkdir -p "%_builddir/Libraries/breakpad"
@@ -127,7 +128,7 @@ tar -xf %{SOURCE5}
 
 %build
 # Setting some constants...
-qtv=%{_QTVERSION}
+qtv=%{qtversion}
 qtdir="%_builddir/Libraries/qt${qtv//./_}"
 
 # Building patched Qt...
@@ -168,14 +169,14 @@ cd "%_builddir/Libraries/breakpad"
 %make_build
 
 # Building Telegram Desktop...
-cd "%_builddir/%{_APPNAME}-%{version}/Telegram"
+cd "%_builddir/%{appname}-%{version}/Telegram"
 gyp/refresh.sh
-cd "%_builddir/%{_APPNAME}-%{version}/out/Release"
+cd "%_builddir/%{appname}-%{version}/out/Release"
 %make_build
 
 %install
 # Installing executables...
-cd "%_builddir/%{_APPNAME}-%{version}/out/Release"
+cd "%_builddir/%{appname}-%{version}/out/Release"
 mkdir -p "%{buildroot}%{_bindir}"
 chrpath -d Telegram
 install -m 755 Telegram "%{buildroot}%{_bindir}/%{name}"
@@ -187,7 +188,7 @@ desktop-file-install --dir="%{buildroot}%{_datadir}/applications" "%{SOURCE101}"
 for size in 16 32 48 64 128 256 512; do
 	dir="%{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps"
 	install -d "$dir"
-	install -m 644 "%_builddir/%{_APPNAME}-%{version}/Telegram/Resources/art/icon${size}.png" "$dir/%{name}.png"
+	install -m 644 "%_builddir/%{appname}-%{version}/Telegram/Resources/art/icon${size}.png" "$dir/%{name}.png"
 done
 
 # Installing tg protocol handler...
@@ -219,8 +220,8 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files
-%doc %{_APPNAME}-%{version}/README.md
-%license %{_APPNAME}-%{version}/LICENSE
+%doc %{appname}-%{version}/README.md
+%license %{appname}-%{version}/LICENSE
 %{_bindir}/%{name}
 %{_datadir}/applications/telegram.desktop
 %{_datadir}/kde4/services/tg.protocol
@@ -238,16 +239,16 @@ fi
 - Created new SPEC.
 - Added installation of tg protocol and mime-handler.
 
-* Wed Sep 14 2016 rkady L. Shane <ashejn@russianfedora.pro> 0.10.6-1
+* Wed Sep 14 2016 Arkady L. Shane <ashejn@russianfedora.pro> 0.10.6-1
 - update to 0.10.6
 
-* Mon Aug  8 2016 rkady L. Shane <ashejn@russianfedora.pro> 0.10.1-2
+* Mon Aug  8 2016 Arkady L. Shane <ashejn@russianfedora.pro> 0.10.1-2
 - added appdata file
 
-* Mon Aug  8 2016 rkady L. Shane <ashejn@russianfedora.pro> 0.10.1-1
+* Mon Aug  8 2016 Arkady L. Shane <ashejn@russianfedora.pro> 0.10.1-1
 - update to 0.10.1
 
-* Thu Aug  4 2016 rkady L. Shane <ashejn@russianfedora.pro> 0.10.0-1
+* Thu Aug  4 2016 Arkady L. Shane <ashejn@russianfedora.pro> 0.10.0-1
 - update to 0.10.0
 
 * Mon Jun 27 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.56-1.R
