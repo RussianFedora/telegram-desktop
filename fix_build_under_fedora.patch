@@ -1,6 +1,6 @@
-From cdbc427630ce8454b4d5f3ab798f52268ef7dd69 Mon Sep 17 00:00:00 2001
+From a4e36e89d7e403ec98b1dcb9d6e77d04640316fd Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
-Date: Wed, 21 Sep 2016 14:38:02 +0200
+Date: Mon, 3 Oct 2016 16:09:44 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock. Thanks to AUR packagers for this.
 
 ---
@@ -11,10 +11,10 @@ Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock. Thanks to AUR
  4 files changed, 65 insertions(+), 46 deletions(-)
 
 diff --git a/Telegram/gyp/Telegram.gyp b/Telegram/gyp/Telegram.gyp
-index 0e8db70..3469337 100644
+index 69abfe2..4d1572f 100644
 --- a/Telegram/gyp/Telegram.gyp
 +++ b/Telegram/gyp/Telegram.gyp
-@@ -70,17 +70,17 @@
+@@ -71,17 +71,17 @@
  
      'defines': [
        'AL_LIBTYPE_STATIC',
