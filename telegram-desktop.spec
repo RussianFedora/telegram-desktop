@@ -4,7 +4,7 @@
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
 Version: 0.10.11
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 Group: Applications/Internet
 License: GPLv3
@@ -131,6 +131,11 @@ tar -xf %{SOURCE5}
 qtv=%{qtversion}
 qtdir="%_builddir/Libraries/qt${qtv//./_}"
 
+# Building breakpad...
+cd "%_builddir/Libraries/breakpad"
+%configure
+%make_build
+
 # Building patched Qt...
 cd "$qtdir/qtbase"
 ./configure \
@@ -162,11 +167,6 @@ cd "$qtdir/qtimageformats"
 qmake .
 %make_build
 make install
-
-# Building breakpad...
-cd "%_builddir/Libraries/breakpad"
-./configure
-%make_build
 
 # Building Telegram Desktop...
 cd "%_builddir/%{appname}-%{version}/Telegram"
@@ -229,6 +229,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Sat Oct 08 2016 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.11-2
+- Will use configure macro to export correct build flags.
+
 * Mon Oct 03 2016 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.11-1
 - Updated to 0.10.11.
 
