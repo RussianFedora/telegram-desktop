@@ -1,23 +1,24 @@
-From a4e36e89d7e403ec98b1dcb9d6e77d04640316fd Mon Sep 17 00:00:00 2001
+From 80baab44cd5ca1ce6fb358064995029e2ee7334d Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
-Date: Mon, 3 Oct 2016 16:09:44 +0200
+Date: Tue, 18 Oct 2016 17:19:45 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock. Thanks to AUR packagers for this.
 
 ---
- Telegram/gyp/Telegram.gyp        | 10 ++++-----
- Telegram/gyp/qt.gypi             | 42 +++++++++++++++++++----------------
- Telegram/gyp/telegram_linux.gypi | 47 ++++++++++++++++++++++++++--------------
- Telegram/gyp/utils.gyp           | 12 +++++-----
- 4 files changed, 65 insertions(+), 46 deletions(-)
+ Telegram/gyp/Telegram.gyp        | 11 ++++----
+ Telegram/gyp/qt.gypi             | 47 +++++++++++++++-----------------
+ Telegram/gyp/telegram_linux.gypi | 58 ++++++++++++++++++++++------------------
+ Telegram/gyp/utils.gyp           | 12 ++++-----
+ 4 files changed, 65 insertions(+), 63 deletions(-)
 
 diff --git a/Telegram/gyp/Telegram.gyp b/Telegram/gyp/Telegram.gyp
-index 69abfe2..4d1572f 100644
+index 5a49cd2..3146f6c 100644
 --- a/Telegram/gyp/Telegram.gyp
 +++ b/Telegram/gyp/Telegram.gyp
-@@ -71,17 +71,17 @@
+@@ -79,18 +79,17 @@
  
      'defines': [
        'AL_LIBTYPE_STATIC',
+-      '<!@(python -c "for s in \'<(travis_defines)\'.split(\',\'): print(s)")',
 +      '__STDC_FORMAT_MACROS',
 +      'TDESKTOP_DISABLE_AUTOUPDATE',
 +      'TDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME',
@@ -35,45 +36,32 @@ index 69abfe2..4d1572f 100644
 -      '<(libs_loc)/ffmpeg',
 -      '<(libs_loc)/openal-soft/include',
        '<(minizip_loc)',
+       '<(sp_media_key_tap_loc)',
      ],
-     'sources': [
 diff --git a/Telegram/gyp/qt.gypi b/Telegram/gyp/qt.gypi
-index 2a8f010..66bbc98 100644
+index 24ededb..0174943 100644
 --- a/Telegram/gyp/qt.gypi
 +++ b/Telegram/gyp/qt.gypi
-@@ -29,7 +29,6 @@
+@@ -38,10 +38,9 @@
              'Qt5Network',
              'Qt5Widgets',
              'Qt5Gui',
 -            'qtharfbuzzng',
            ],
-           'conditions': [
-             [ 'build_macold', {
-@@ -69,7 +68,7 @@
-             'qt_loc_unix': '/usr/local/Qt-<(qt_version)'
-           }],
-           [ 'build_mac and not build_macold', {
--            'qt_loc_unix': '/usr/local/tdesktop/Qt-<(qt_version)',
-+            'qt_loc_unix': '../../../qt',
-             'qt_libs': [
-               '<@(qt_libs)',
-               'Qt5Core',
-@@ -78,7 +77,7 @@
-             ],
-           }],
-           [ 'build_linux', {
--            'qt_loc_unix': '/usr/local/tdesktop/Qt-<(qt_version)',
-+            'qt_loc_unix': '../../../qt',
-             'qt_lib_prefix': 'lib',
-             'qt_lib_debug_postfix': '.a',
-             'qt_lib_release_postfix': '.a',
-@@ -91,18 +90,6 @@
+           'qt_version%': '<(qt_version)',
+-          'linux_path_qt%': '/usr/local/tdesktop/Qt-<(qt_version)',
++          'linux_path_qt%': '../../../qt',
+         },
+         'qt_version%': '<(qt_version)',
+         'qt_loc_unix': '<(linux_path_qt)',
+@@ -91,19 +90,6 @@
                '<@(qt_libs)',
                'Qt5DBus',
                'Qt5Core',
 -              'qtpcre',
 -              'Xi',
 -              'Xext',
+-              'Xfixes',
 -              'SM',
 -              'ICE',
 -              'fontconfig',
@@ -86,14 +74,27 @@ index 2a8f010..66bbc98 100644
              ],
            }],
          ],
-@@ -202,24 +189,41 @@
+@@ -128,11 +114,6 @@
+         'qt_loc': '<(qt_loc_unix)',
+       }],
+     ],
+-
+-    'linux_path_xkbcommon%': '/usr/local',
+-    'linux_lib_ssl%': '/usr/local/ssl/lib/libssl.a',
+-    'linux_lib_crypto%': '/usr/local/ssl/lib/libcrypto.a',
+-    'linux_lib_icu%': '/usr/lib/libicutu.a /usr/lib/libicui18n.a /usr/lib/libicuuc.a /usr/lib/libicudata.a',
+   },
+ 
+   'configurations': {
+@@ -208,25 +189,41 @@
          '<(qt_loc)/plugins/platforminputcontexts',
        ],
        'libraries': [
--        '/usr/local/lib/libxkbcommon.a',
+-        '<(linux_path_xkbcommon)/lib/libxkbcommon.a',
          '<@(qt_libs_release)',
--        '/usr/local/ssl/lib/libssl.a',
--        '/usr/local/ssl/lib/libcrypto.a',
+-        '<(linux_lib_ssl)',
+-        '<(linux_lib_crypto)',
+-        '<!@(python -c "for s in \'<(linux_lib_icu)\'.split(\' \'): print(s)")',
 +        'z',
 +        'pcre16',
 +        'harfbuzz',
@@ -133,27 +134,40 @@ index 2a8f010..66bbc98 100644
          '-g',
          '-rdynamic',
 diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
-index 15bfbb6..ff1ae35 100644
+index d07b592..46df336 100644
 --- a/Telegram/gyp/telegram_linux.gypi
 +++ b/Telegram/gyp/telegram_linux.gypi
-@@ -29,12 +29,12 @@
+@@ -27,44 +27,50 @@
+ # QApplication() -> createPlatformIntegration -> QXcbIntegrationPlugin::create
+         #'xkbcommon',
        ],
+-      'linux_path_ffmpeg%': '/usr/local',
+-      'linux_path_openal%': '/usr/local',
+-      'linux_path_libexif_lib%': '<(libs_loc)/libexif-0.6.20/libexif/.libs',
+-      'linux_path_va%': '/usr/local',
+       'linux_path_breakpad%': '<(libs_loc)/breakpad',
      },
      'include_dirs': [
 -      '/usr/local/include',
--      '<(libs_loc)/openssl-xcode/include'
+-      '<(linux_path_ffmpeg)/include',
+-      '<(linux_path_openal)/include',
 +      '/usr/include',
 +      '/usr/include/ffmpeg',
+       '<(linux_path_breakpad)/include/breakpad',
      ],
      'library_dirs': [
 -      '/usr/local/lib',
--      '<(libs_loc)/libexif-0.6.20/libexif/.libs',
+-      '<(linux_path_ffmpeg)/lib',
+-      '<(linux_path_openal)/lib',
+-      '<(linux_path_libexif_lib)',
+-      '<(linux_path_va)/lib',
+-      '<(linux_path_breakpad)/lib',
 +      '/usr/lib64',
 +      '/usr/lib',
-       '<(libs_loc)/breakpad/src/client/linux',
++      '<(linux_path_breakpad)/src/client/linux',
      ],
      'libraries': [
-@@ -42,18 +42,33 @@
+       'breakpad_client',
        'composeplatforminputcontextplugin',
        'ibusplatforminputcontextplugin',
        'fcitxplatforminputcontextplugin',
@@ -168,6 +182,7 @@ index 15bfbb6..ff1ae35 100644
 -      'libva-x11.a',
 -      'libva-drm.a',
 -      'libva.a',
+-      'libdrm.a',
 -      'libz.a',
 +      'xkbcommon',
 +      'xkbcommon-x11',
