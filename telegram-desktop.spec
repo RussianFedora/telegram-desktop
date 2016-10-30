@@ -82,7 +82,7 @@ BuildRequires: libxkbcommon-x11-devel
 BuildRequires: harfbuzz-devel
 BuildRequires: pcre-devel
 %if 0%{?fedora} >= 26
-BuildRequires: compat-openssl10
+BuildRequires: compat-openssl10-devel
 %else
 BuildRequires: openssl-devel
 %endif
