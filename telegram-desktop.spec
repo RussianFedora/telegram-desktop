@@ -16,8 +16,8 @@
 
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
-Version: 0.10.19
-Release: 2%{?dist}
+Version: 0.10.20
+Release: 1%{?dist}
 
 Group: Applications/Internet
 License: GPLv3
@@ -113,8 +113,8 @@ tar -xf %{SOURCE0}
 
 # Patching Telegram Desktop...
 cd "%_builddir/%{appname}-%{version}"
-patch -p1 -i %{PATCH0}
-patch -p1 -i %{PATCH1}
+%patch0 -p1
+%patch1 -p1
 
 # Unpacking Qt...
 cd "$qtdir"
@@ -247,6 +247,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Tue Dec 20 2016 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.20-1
+- Updated to 0.10.20.
+
 * Sun Oct 30 2016 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.19-2
 - Fixed build under Fedora Rawhide (26).
 
