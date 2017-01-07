@@ -1,20 +1,20 @@
-From 80baab44cd5ca1ce6fb358064995029e2ee7334d Mon Sep 17 00:00:00 2001
+From a5d9fbc7d4738a0cf244106eb172ff521776b33f Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
-Date: Tue, 18 Oct 2016 17:19:45 +0200
+Date: Thu, 5 Jan 2017 15:18:18 +0100
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock. Thanks to AUR packagers for this.
 
 ---
  Telegram/gyp/Telegram.gyp        | 11 ++++----
- Telegram/gyp/qt.gypi             | 47 +++++++++++++++-----------------
- Telegram/gyp/telegram_linux.gypi | 58 ++++++++++++++++++++++------------------
- Telegram/gyp/utils.gyp           | 12 ++++-----
- 4 files changed, 65 insertions(+), 63 deletions(-)
+ Telegram/gyp/qt.gypi             | 47 +++++++++++++++----------------
+ Telegram/gyp/telegram_linux.gypi | 60 ++++++++++++++++++++++------------------
+ Telegram/gyp/utils.gyp           | 12 ++++----
+ 4 files changed, 66 insertions(+), 64 deletions(-)
 
 diff --git a/Telegram/gyp/Telegram.gyp b/Telegram/gyp/Telegram.gyp
-index 5a49cd2..3146f6c 100644
+index 28d1128..0174f70 100644
 --- a/Telegram/gyp/Telegram.gyp
 +++ b/Telegram/gyp/Telegram.gyp
-@@ -79,18 +79,17 @@
+@@ -80,18 +80,17 @@
  
      'defines': [
        'AL_LIBTYPE_STATIC',
@@ -134,10 +134,10 @@ index 24ededb..0174943 100644
          '-g',
          '-rdynamic',
 diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
-index d07b592..46df336 100644
+index f4a4022..64a5906 100644
 --- a/Telegram/gyp/telegram_linux.gypi
 +++ b/Telegram/gyp/telegram_linux.gypi
-@@ -27,44 +27,50 @@
+@@ -27,45 +27,51 @@
  # QApplication() -> createPlatformIntegration -> QXcbIntegrationPlugin::create
          #'xkbcommon',
        ],
@@ -182,6 +182,7 @@ index d07b592..46df336 100644
 -      'libva-x11.a',
 -      'libva-drm.a',
 -      'libva.a',
+-      'libvdpau.a',
 -      'libdrm.a',
 -      'libz.a',
 +      'xkbcommon',
@@ -209,6 +210,7 @@ index d07b592..46df336 100644
 +      'va-x11',
 +      'va-drm',
 +      'va',
++      'vdpau',
 +      'z',
 +      'webp',
  #      '<!(pkg-config 2> /dev/null --libs <@(pkgconfig_libs))',
@@ -249,5 +251,5 @@ index 209c737..06c5905 100644
            }]
          ],
 -- 
-2.7.4
+2.9.3
 

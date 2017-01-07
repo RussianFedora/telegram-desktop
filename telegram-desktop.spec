@@ -16,7 +16,7 @@
 
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
-Version: 0.10.23
+Version: 0.10.26
 Release: 1%{?dist}
 
 Group: Applications/Internet
@@ -36,6 +36,7 @@ Source103: tg.protocol
 
 Patch0: fix_build_under_fedora.patch
 Patch1: fix_cmake.patch
+Patch2: fix_build_under_gcc_631.patch
 
 Requires: hicolor-icon-theme
 BuildRequires: desktop-file-utils
@@ -77,6 +78,7 @@ BuildRequires: xcb-util-cursor-devel
 BuildRequires: xcb-util-keysyms-devel
 BuildRequires: xcb-util-renderutil-devel
 BuildRequires: libva-devel
+BuildRequires: libvdpau-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libxkbcommon-x11-devel
 BuildRequires: harfbuzz-devel
@@ -115,6 +117,7 @@ tar -xf %{SOURCE0}
 cd "%_builddir/%{appname}-%{version}"
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 # Unpacking Qt...
 cd "$qtdir"
@@ -247,6 +250,12 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Sat Jan 07 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.26-1
+- Updated to 0.10.26 (alpha).
+
+* Thu Jan 05 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.25-1
+- Updated to 0.10.25 (alpha). Added patch to build with GCC 6.3.1.
+
 * Mon Jan 02 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.23-1
 - Updated to 0.10.23 (alpha). Updated externals to latest commits.
 

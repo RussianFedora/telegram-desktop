@@ -1,0 +1,25 @@
+From e2cda2efdd825f9ad2e1e7a215279b6d44708e35 Mon Sep 17 00:00:00 2001
+From: Vitaly Zaitsev <vitaly@easycoding.org>
+Date: Thu, 5 Jan 2017 15:23:03 +0100
+Subject: [PATCH] Fixed build under GCC 6.3.1.
+
+---
+ Telegram/SourceFiles/historywidget.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Telegram/SourceFiles/historywidget.cpp b/Telegram/SourceFiles/historywidget.cpp
+index 8447550..e032859 100644
+--- a/Telegram/SourceFiles/historywidget.cpp
++++ b/Telegram/SourceFiles/historywidget.cpp
+@@ -189,7 +189,7 @@ namespace {
+ // is applied once for blocks list in a history and once for items list in the found block
+ template <bool TopToBottom, typename T>
+ int binarySearchBlocksOrItems(const T &list, int edge) {
+-	auto start = 0, end = list.size();
++	auto start = 0; auto end = list.size();
+ 	while (end - start > 1) {
+ 		auto middle = (start + end) / 2;
+ 		auto top = list[middle]->y;
+-- 
+2.9.3
+
