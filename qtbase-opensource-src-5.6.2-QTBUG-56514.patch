@@ -1,0 +1,42 @@
+From 7740f5e98b2f3ab5d9c1f512d1a89e9e1b64434d Mon Sep 17 00:00:00 2001
+From: J-P Nurmi <jpnurmi@qt.io>
+Date: Thu, 13 Oct 2016 13:04:33 +0200
+Subject: [PATCH] QMimeXMLProvider: add missing out-of-line destructor
+
+Fixes build with the latest GCC 7.
+
+Change-Id: I4900a256ed1c6cb177d7f94d54e5b07c06ddad08
+Task-number: QTBUG-56514
+Reviewed-by: Marc Mutz <marc.mutz@kdab.com>
+---
+ src/corelib/mimetypes/qmimeprovider.cpp | 4 ++++
+ src/corelib/mimetypes/qmimeprovider_p.h | 1 +
+ 2 files changed, 5 insertions(+)
+
+diff --git a/src/corelib/mimetypes/qmimeprovider.cpp b/src/corelib/mimetypes/qmimeprovider.cpp
+index fbd14e2..aa8d8c9 100644
+--- a/src/corelib/mimetypes/qmimeprovider.cpp
++++ b/src/corelib/mimetypes/qmimeprovider.cpp
+@@ -706,6 +706,10 @@ QMimeXMLProvider::QMimeXMLProvider(QMimeDatabasePrivate *db)
+     initResources();
+ }
+ 
++QMimeXMLProvider::~QMimeXMLProvider()
++{
++}
++
+ bool QMimeXMLProvider::isValid()
+ {
+     return true;
+diff --git a/src/corelib/mimetypes/qmimeprovider_p.h b/src/corelib/mimetypes/qmimeprovider_p.h
+index c0517d6..8eba71e 100644
+--- a/src/corelib/mimetypes/qmimeprovider_p.h
++++ b/src/corelib/mimetypes/qmimeprovider_p.h
+@@ -132,6 +132,7 @@ class QMimeXMLProvider : public QMimeProviderBase
+ {
+ public:
+     QMimeXMLProvider(QMimeDatabasePrivate *db);
++    ~QMimeXMLProvider();
+ 
+     virtual bool isValid() Q_DECL_OVERRIDE;
+     virtual QMimeType mimeTypeForName(const QString &name) Q_DECL_OVERRIDE;

@@ -17,7 +17,7 @@
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
 Version: 1.0.6
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 Group: Applications/Internet
 License: GPLv3
@@ -37,6 +37,7 @@ Source103: tg.protocol
 Patch0: fix_build_under_fedora.patch
 Patch1: fix_cmake.patch
 Patch2: fix_build_under_gcc_631.patch
+Patch3: qtbase-opensource-src-5.6.2-QTBUG-56514.patch
 
 Requires: hicolor-icon-theme
 BuildRequires: desktop-file-utils
@@ -126,9 +127,14 @@ mv -f "qtbase-opensource-src-%{qtversion}" "qtbase"
 tar -xf %{SOURCE2}
 mv -f "qtimageformats-opensource-src-%{qtversion}" "qtimageformats"
 
-# Applying Qt patch...
+# Applying Qt patch by Telegram Desktop team...
 cd "$qtdir/qtbase"
 patch -p1 -i "$qtpatch"
+
+# Applying QTBUG-56514 patch for Fedora Rawhide (GCC 7.x)...
+%if 0%{?fedora} >= 26
+%patch3 -p1
+%endif
 
 # Unpacking GYP...
 mkdir -p "%_builddir/Libraries/gyp"
@@ -250,6 +256,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Thu Feb 02 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.6-2
+- Backported QTBUG-56514 patch to fix building under GCC 7.0.
+
 * Wed Feb 01 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.6-1
 - Updated to 1.0.6.
 
