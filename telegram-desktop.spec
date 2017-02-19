@@ -3,21 +3,21 @@
 %global appname tdesktop
 
 # Git revision of GYP...
-%global commit3 940a15ee3f1c89f193cb4c19373b3f6e9ad15b95
+%global commit3 a7055b3989c1074adca03b4b4829e7f0e57f6efd
 %global shortcommit3 %(c=%{commit3}; echo ${c:0:7})
 
 # Git revision of Breakpad...
-%global commit4 c2d969cb1050803961a53cfdbbcff5c69e579ebb
+%global commit4 2b7724245b7298df872983cdec941be877ea9b62
 %global shortcommit4 %(c=%{commit4}; echo ${c:0:7})
 
 # Git revision of Breakpad-lss...
-%global commit5 1549d20f6d3e7d66bb4e687c0ab9da42c2bff2ac
+%global commit5 5cedb6bf4e42ebb0a90603535321a265b72d3709
 %global shortcommit5 %(c=%{commit5}; echo ${c:0:7})
 
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
-Version: 1.0.6
-Release: 2%{?dist}
+Version: 1.0.12
+Release: 1%{?dist}
 
 Group: Applications/Internet
 License: GPLv3
@@ -36,8 +36,7 @@ Source103: tg.protocol
 
 Patch0: fix_build_under_fedora.patch
 Patch1: fix_cmake.patch
-Patch2: fix_build_under_gcc_631.patch
-Patch3: qtbase-opensource-src-5.6.2-QTBUG-56514.patch
+Patch2: qtbase-opensource-src-5.6.2-QTBUG-56514.patch
 
 Requires: hicolor-icon-theme
 BuildRequires: desktop-file-utils
@@ -118,7 +117,6 @@ tar -xf %{SOURCE0}
 cd "%_builddir/%{appname}-%{version}"
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 # Unpacking Qt...
 cd "$qtdir"
@@ -133,7 +131,7 @@ patch -p1 -i "$qtpatch"
 
 # Applying QTBUG-56514 patch for Fedora Rawhide (GCC 7.x)...
 %if 0%{?fedora} >= 26
-%patch3 -p1
+%patch2 -p1
 %endif
 
 # Unpacking GYP...
@@ -256,6 +254,16 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Sun Feb 19 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.12-1
+- Updated to 1.0.12.
+
+* Fri Feb 17 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.11-1
+- Updated to 1.0.11 (alpha).
+
+* Sun Feb 12 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.9-1
+- Updated to 1.0.9 (alpha).
+- Updated GYP, Breakpad and LSS to latest commits.
+
 * Thu Feb 02 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.6-2
 - Backported QTBUG-56514 patch to fix building under GCC 7.0.
 
