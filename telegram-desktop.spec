@@ -16,7 +16,7 @@
 
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
-Version: 1.0.12
+Version: 1.0.13
 Release: 1%{?dist}
 
 Group: Applications/Internet
@@ -245,7 +245,7 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files
-%doc %{appname}-%{version}/README.md
+%doc %{appname}-%{version}/README.md %{appname}-%{version}/changelog.txt
 %license %{appname}-%{version}/LICENSE
 %{_bindir}/%{name}
 %{_datadir}/applications/telegram.desktop
@@ -254,6 +254,10 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Mon Feb 20 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.13-1
+- Updated to 1.0.13.
+- Added changelog.txt to documents.
+
 * Sun Feb 19 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.12-1
 - Updated to 1.0.12.
 
